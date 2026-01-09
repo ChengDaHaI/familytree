@@ -50,6 +50,20 @@
           "fatherId": "shi-fu"
         },
         {
+          "id": "shui-ying",
+          "name": "水英",
+          "birthYear": 1980,
+          "info": "时富之女。",
+          "fatherId": "shi-fu"
+        },
+        {
+          "id": "man-ying",
+          "name": "满英",
+          "birthYear": 1980,
+          "info": "时富之女。",
+          "fatherId": "shi-fu"
+        },
+        {
           "id": "zheng-gang",
           "name": "正刚",
           "birthYear": 1980,
@@ -104,14 +118,30 @@
           "fatherId": "zheng-zhong"
         },
         {
+          "id": "ting-ting",
+          "name": "婷婷",
+          "birthYear": 1991,
+          "info": "正任之女。",
+          "fatherId": "zheng-ren"
+        },
+        {
+          "id": "xin-zi",
+          "name": "新姿",
+          "birthYear": 1993,
+          "info": "正任之女。",
+          "fatherId": "zheng-ren"
+        },
+        {
           "id": "shao-qing",
           "name": "少清",
+          "birthYear": 1999,
           "info": "正刚之子。",
           "fatherId": "zheng-gang"
         },
         {
           "id": "hui",
           "name": "慧",
+          "birthYear": 1997,
           "info": "正刚之女。",
           "fatherId": "zheng-gang"
         }

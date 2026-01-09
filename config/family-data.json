@@ -8,7 +8,8 @@
           "name": "良文",
           "birthYear": 1900,
           "deathYear": 2003,
-          "info": "妻张玉梅，生二子：时富、时贵，生七女：爱莲，爱蓉、秀莲、春莲、秀萍、桂萍、丽萍。"
+          "info": "妻张玉梅，生二子：时富、时贵，生七女：爱莲，爱蓉、秀莲、春莲、秀萍、桂萍、丽萍。",
+          "photo": "/people/liang-wen.jpg"
         }
       ]
     },
@@ -20,7 +21,8 @@
           "name": "时富",
           "birthYear": 1948,
           "info": "良文长子，字火生。妻叶少云，生二子：正任、正重，生二女：水英、满英。",
-          "fatherId": "liang-wen"
+          "fatherId": "liang-wen",
+          "photo": "/people/shi-fu.jpg"
         },
         {
           "id": "shi-gui",
@@ -28,7 +30,8 @@
           "birthYear": 1951,
           "deathYear": 2005,
           "info": "良文次子，字金生。生三子：正刚、国庆、正义，生一女：晓英。",
-          "fatherId": "liang-wen"
+          "fatherId": "liang-wen",
+          "photo": "/people/shi-gui.jpg"
         }
       ]
     },
@@ -40,56 +43,64 @@
           "name": "正任",
           "birthYear": 1968,
           "info": "长子，字国忠，经营家具厂。妻孙晓英，生一子：用谋、二女：婷婷、新姿。",
-          "fatherId": "shi-fu"
+          "fatherId": "shi-fu",
+          "photo": "/people/zheng-ren.jpg"
         },
         {
           "id": "zheng-zhong",
           "name": "正重",
           "birthYear": 1971,
           "info": "次子，字正德，商业地产高级经理。妻李美兰，生二子：用权、用军。",
-          "fatherId": "shi-fu"
+          "fatherId": "shi-fu",
+          "photo": "/people/zheng-zhong.jpg"
         },
         {
           "id": "shui-ying",
           "name": "水英",
           "birthYear": 1980,
           "info": "时富之女。",
-          "fatherId": "shi-fu"
+          "fatherId": "shi-fu",
+          "photo": "/people/shui-ying.jpg"
         },
         {
           "id": "man-ying",
           "name": "满英",
           "birthYear": 1980,
           "info": "时富之女。",
-          "fatherId": "shi-fu"
+          "fatherId": "shi-fu",
+          "photo": "/people/man-ying.jpg"
         },
         {
           "id": "zheng-gang",
           "name": "正刚",
           "birthYear": 1980,
           "info": "时贵长子。生一子少清、一女慧。",
-          "fatherId": "shi-gui"
+          "fatherId": "shi-gui",
+          "photo": "/people/zheng-gang.jpg"
         },
         {
           "id": "guo-qing",
           "name": "国庆",
           "birthYear": 1980,
           "info": "时贵次子。",
-          "fatherId": "shi-gui"
+          "fatherId": "shi-gui",
+          "photo": "/people/guo-qing.jpg"
         },
         {
           "id": "zheng-yi",
           "name": "正义",
           "birthYear": 1980,
           "info": "时贵三子。",
-          "fatherId": "shi-gui"
+          "fatherId": "shi-gui",
+          "photo": "/people/zheng-yi.jpg"
         },
         {
           "id": "xiao-ying",
           "name": "晓英",
           "birthYear": 1980,
           "info": "时贵之女。",
-          "fatherId": "shi-gui"
+          "fatherId": "shi-gui",
+          "photo": "/people/xiao-ying.jpg"
         }
       ]
     },
@@ -101,49 +112,56 @@
           "name": "用谋",
           "birthYear": 1995,
           "info": "正任之子，字渡清。子承父业经营家具厂，妻薛余儿，生一子福鑫。",
-          "fatherId": "zheng-ren"
+          "fatherId": "zheng-ren",
+          "photo": "/people/yong-mou.jpg"
         },
         {
           "id": "yong-quan",
           "name": "用权",
           "birthYear": 1994,
           "info": "正重之子，字大海。美国博士毕业并留美工作。",
-          "fatherId": "zheng-zhong"
+          "fatherId": "zheng-zhong",
+          "photo": "/people/yong-quan.jpg"
         },
         {
           "id": "yong-jun",
           "name": "用军",
           "birthYear": 2007,
           "info": "正重之子，字博达。上海的大学在读学生。",
-          "fatherId": "zheng-zhong"
+          "fatherId": "zheng-zhong",
+          "photo": "/people/yong-jun.jpg"
         },
         {
           "id": "ting-ting",
           "name": "婷婷",
           "birthYear": 1991,
           "info": "正任之女。",
-          "fatherId": "zheng-ren"
+          "fatherId": "zheng-ren",
+          "photo": "/people/ting-ting.jpg"
         },
         {
           "id": "xin-zi",
           "name": "新姿",
           "birthYear": 1993,
           "info": "正任之女。",
-          "fatherId": "zheng-ren"
+          "fatherId": "zheng-ren",
+          "photo": "/people/xin-zi.jpg"
         },
         {
           "id": "shao-qing",
           "name": "少清",
           "birthYear": 1999,
           "info": "正刚之子。",
-          "fatherId": "zheng-gang"
+          "fatherId": "zheng-gang",
+          "photo": "/people/shao-qing.jpg"
         },
         {
           "id": "hui",
           "name": "慧",
           "birthYear": 1997,
           "info": "正刚之女。",
-          "fatherId": "zheng-gang"
+          "fatherId": "zheng-gang",
+          "photo": "/people/hui.jpg"
         }
       ]
     },
@@ -155,7 +173,8 @@
           "name": "福鑫",
           "birthYear": 2024,
           "info": "用谋之子，尚在襁褓中。",
-          "fatherId": "yong-mou"
+          "fatherId": "yong-mou",
+          "photo": "/people/fu-xin.jpg"
         }
       ]
     }

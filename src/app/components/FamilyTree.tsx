@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { FamilyData, Person } from '@/types/family';
 import { UserIcon, CalendarIcon, UserGroupIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import { highlightMatch } from '@/utils/search';
@@ -90,9 +91,19 @@ const PersonCard = ({
             <div className="relative">
                 <div className="flex items-center justify-between gap-3 mb-3">
                     <div className="flex items-center gap-3">
-                        <div className="bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
-                            <UserIcon className="h-5 w-5 text-blue-600" />
-                        </div>
+                        {person.photo ? (
+                            <Image 
+                                src={person.photo}
+                                alt={person.name}
+                                width={40}
+                                height={40}
+                                className="rounded-full border border-gray-200 object-cover"
+                            />
+                        ) : (
+                            <div className="bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+                                <UserIcon className="h-5 w-5 text-blue-600" />
+                            </div>
+                        )}
                         <h3 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
                             <span dangerouslySetInnerHTML={{ 
                                 __html: searchTerm ? highlightMatch(person.name, searchTerm) : person.name 

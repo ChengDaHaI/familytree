@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FamilyData, Person } from '@/types/family';
 import { ChevronDownIcon, ChevronRightIcon, UserIcon, CalendarIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import { highlightMatch } from '@/utils/search';
 import { ANIMATION_DELAYS, CSS_CLASSES } from '@/utils/constants';
 
@@ -111,9 +112,19 @@ const TreeNode = ({ person, level, searchTerm, searchInInfo, firstMatchId }: Tre
         )}
         
         <div className="flex items-center">
-          <div className="bg-blue-50 p-1 rounded-md mr-2 group-hover:bg-blue-100 transition-colors duration-300">
-            <UserIcon className="h-4 w-4 text-blue-600" />
-          </div>
+          {person.photo ? (
+            <Image 
+              src={person.photo}
+              alt={person.name}
+              width={28}
+              height={28}
+              className="rounded-full border border-gray-200 object-cover mr-2"
+            />
+          ) : (
+            <div className="bg-blue-50 p-1 rounded-md mr-2 group-hover:bg-blue-100 transition-colors duration-300">
+              <UserIcon className="h-4 w-4 text-blue-600" />
+            </div>
+          )}
           <div>
             <span className="font-medium text-gray-800">
               <span dangerouslySetInnerHTML={{ 

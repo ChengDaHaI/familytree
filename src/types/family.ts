@@ -7,6 +7,7 @@ export interface Person {
     spouse?: string;
     children?: Person[];
     fatherId?: string;
+    photo?: string; // path under public/ or external URL
 }
 
 export interface Generation {

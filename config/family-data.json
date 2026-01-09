@@ -48,6 +48,34 @@
           "birthYear": 1971,
           "info": "次子，字正德，商业地产高级经理。妻李美兰，生二子：用权、用军。",
           "fatherId": "shi-fu"
+        },
+        {
+          "id": "zheng-gang",
+          "name": "正刚",
+          "birthYear": 1980,
+          "info": "时贵长子。生一子少清、一女慧。",
+          "fatherId": "shi-gui"
+        },
+        {
+          "id": "guo-qing",
+          "name": "国庆",
+          "birthYear": 1980,
+          "info": "时贵次子。",
+          "fatherId": "shi-gui"
+        },
+        {
+          "id": "zheng-yi",
+          "name": "正义",
+          "birthYear": 1980,
+          "info": "时贵三子。",
+          "fatherId": "shi-gui"
+        },
+        {
+          "id": "xiao-ying",
+          "name": "晓英",
+          "birthYear": 1980,
+          "info": "时贵之女。",
+          "fatherId": "shi-gui"
         }
       ]
     },
@@ -74,6 +102,18 @@
           "birthYear": 2007,
           "info": "正重之子，字博达。上海的大学在读学生。",
           "fatherId": "zheng-zhong"
+        },
+        {
+          "id": "shao-qing",
+          "name": "少清",
+          "info": "正刚之子。",
+          "fatherId": "zheng-gang"
+        },
+        {
+          "id": "hui",
+          "name": "慧",
+          "info": "正刚之女。",
+          "fatherId": "zheng-gang"
         }
       ]
     },

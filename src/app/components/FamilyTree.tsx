@@ -89,7 +89,7 @@ const PersonCard = ({
             className={`group bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-100 relative overflow-hidden cursor-pointer ${expanded ? 'ring-1 ring-blue-300' : ''}`}
             onClick={toggleExpand}
         >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             <div className="relative">
                 <div className="flex items-center justify-between gap-3 mb-3">
                     <div className="flex items-center gap-3">
@@ -119,12 +119,17 @@ const PersonCard = ({
                         >
                             查看详情
                         </button>
-                        <div className="text-gray-400">
+                        <button 
+                            type="button"
+                            aria-label={expanded ? '收起' : '展开'}
+                            className="text-gray-500 hover:text-gray-700 p-1 rounded-md hover:bg-gray-100"
+                            onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
+                        >
                             {expanded ? 
                                 <ChevronUpIcon className="h-5 w-5" /> : 
                                 <ChevronDownIcon className="h-5 w-5" />
                             }
-                        </div>
+                        </button>
                     </div>
                 </div>
                 

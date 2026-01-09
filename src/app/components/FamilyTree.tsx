@@ -59,6 +59,7 @@ const PersonCard = ({
     sonsMap,
     scrollToPerson,
     onViewDetails,
+    expanded,
     searchTerm,
     searchInInfo
 }: { 
@@ -67,31 +68,23 @@ const PersonCard = ({
     sonsMap: Map<string, Person[]>;
     scrollToPerson: (personId: string) => void;
     onViewDetails: (person: Person) => void;
+    expanded: boolean;
     searchTerm?: string;
     searchInInfo?: boolean;
 }) => {
-    const [expanded, setExpanded] = useState(false);
     const father = person.fatherId ? personMap.get(person.fatherId) : undefined;
     const sons = person.id ? sonsMap.get(person.id) || [] : [];
 
-    const toggleExpand = (e: React.MouseEvent) => {
-        // 防止点击按钮时触发卡片展开
-        if ((e.target as HTMLElement).tagName === 'BUTTON' || 
-            (e.target as HTMLElement).closest('button')) {
-            return;
-        }
-        setExpanded(!expanded);
-    };
+    // 单卡片不再可折叠，展开状态由父级控制
 
     return (
         <div 
             id={`person-${person.id}`} 
-            className={`group bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-100 relative overflow-hidden cursor-pointer ${expanded ? 'ring-1 ring-blue-300' : ''}`}
-            onClick={toggleExpand}
+            className={`group bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-100 relative overflow-hidden ${expanded ? 'ring-1 ring-blue-300' : ''}`}
         >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
             <div className="relative">
-                <div className="flex items-center justify-between gap-3 mb-3">
+                <div className="flex items-center justify-between gap-3 mb-3 relative z-10">
                     <div className="flex items-center gap-3">
                         {person.photo ? (
                             <Image 
@@ -118,17 +111,6 @@ const PersonCard = ({
                             onClick={(e) => { e.stopPropagation(); onViewDetails(person); }}
                         >
                             查看详情
-                        </button>
-                        <button 
-                            type="button"
-                            aria-label={expanded ? '收起' : '展开'}
-                            className="text-gray-500 hover:text-gray-700 p-1 rounded-md hover:bg-gray-100"
-                            onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
-                        >
-                            {expanded ? 
-                                <ChevronUpIcon className="h-5 w-5" /> : 
-                                <ChevronDownIcon className="h-5 w-5" />
-                            }
                         </button>
                     </div>
                 </div>
@@ -174,7 +156,7 @@ const PersonCard = ({
                     </div>
                 )}
                 
-                <p className={`text-gray-600 text-sm leading-relaxed mb-3 ${expanded ? '' : 'line-clamp-3'}`}>
+                <p className={`text-gray-600 text-sm leading-relaxed mb-3`}>
                     <span dangerouslySetInnerHTML={{ 
                         __html: (searchTerm && searchInInfo) ? highlightMatch(person.info, searchTerm) : person.info 
                     }} />
@@ -213,14 +195,23 @@ const Generation = ({
     searchTerm?: string;
     searchInInfo?: boolean;
 }) => {
+    const [expandedAll, setExpandedAll] = useState(false);
     return (
         <div className="mb-10">
             <div className="flex items-center gap-4 mb-6">
                 <h2 className="text-xl font-bold text-gray-800">
                     {title}
                 </h2>
+                <button 
+                    type="button"
+                    className="text-sm px-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium"
+                    onClick={() => setExpandedAll(!expandedAll)}
+                >
+                    {expandedAll ? '隐藏' : '显示'}
+                </button>
                 <div className="flex-1 h-px bg-gradient-to-r from-blue-50 to-transparent"></div>
             </div>
+            {expandedAll && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {people.map((person, index) => (
                     <PersonCard 
@@ -229,12 +220,14 @@ const Generation = ({
                         personMap={personMap}
                         sonsMap={sonsMap}
                         scrollToPerson={scrollToPerson}
+                        expanded={true}
                         onViewDetails={onViewDetails}
                         searchTerm={searchTerm}
                         searchInInfo={searchInInfo}
                     />
                 ))}
             </div>
+            )}
         </div>
     );
 };

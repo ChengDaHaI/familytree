@@ -1,0 +1,45 @@
+name: Deploy on main push
+
+on:
+  push:
+    branches: [ "main" ]
+
+# Prevent overlapping deploys
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy_via_ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script_stop: true
+          envs: APP_DIR,RESTART_CMD
+          script: |
+            set -e
+            echo "Starting remote deploy..."
+            if [ -z "${APP_DIR}" ]; then echo "APP_DIR secret not set"; exit 1; fi
+            cd "${APP_DIR}"
+            # Ensure repo exists on server; clone if missing
+            if [ ! -d .git ]; then
+              echo "Cloning repository on server..."
+              git clone --depth 1 "${GITHUB_SERVER_URL}/${{ github.repository }}.git" .
+            fi
+
+            # Fetch latest and hard reset to origin/main
+            git fetch --all --prune
+            git reset --hard origin/main
+
+            echo "Deploy completed." 
+        env:
+          APP_DIR: /home/ubuntu/familytree

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FamilyData, Person } from '@/types/family';
-import { UserIcon, CalendarIcon, UserGroupIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { UserIcon, CalendarIcon, UserGroupIcon, ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { highlightMatch } from '@/utils/search';
 
 interface FamilyTreeProps {
@@ -58,6 +58,7 @@ const PersonCard = ({
     personMap,
     sonsMap,
     scrollToPerson,
+    onViewDetails,
     searchTerm,
     searchInInfo
 }: { 
@@ -65,6 +66,7 @@ const PersonCard = ({
     personMap: Map<string, Person>;
     sonsMap: Map<string, Person[]>;
     scrollToPerson: (personId: string) => void;
+    onViewDetails: (person: Person) => void;
     searchTerm?: string;
     searchInInfo?: boolean;
 }) => {
@@ -110,11 +112,19 @@ const PersonCard = ({
                             }} />
                         </h3>
                     </div>
-                    <div className="text-gray-400">
-                        {expanded ? 
-                            <ChevronUpIcon className="h-5 w-5" /> : 
-                            <ChevronDownIcon className="h-5 w-5" />
-                        }
+                    <div className="flex items-center gap-2">
+                        <button 
+                            className="px-3 py-1.5 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700"
+                            onClick={(e) => { e.stopPropagation(); onViewDetails(person); }}
+                        >
+                            查看详情
+                        </button>
+                        <div className="text-gray-400">
+                            {expanded ? 
+                                <ChevronUpIcon className="h-5 w-5" /> : 
+                                <ChevronDownIcon className="h-5 w-5" />
+                            }
+                        </div>
                     </div>
                 </div>
                 
@@ -185,6 +195,7 @@ const Generation = ({
     personMap,
     sonsMap,
     scrollToPerson,
+    onViewDetails,
     searchTerm,
     searchInInfo
 }: { 
@@ -193,6 +204,7 @@ const Generation = ({
     personMap: Map<string, Person>;
     sonsMap: Map<string, Person[]>;
     scrollToPerson: (personId: string) => void;
+    onViewDetails: (person: Person) => void;
     searchTerm?: string;
     searchInInfo?: boolean;
 }) => {
@@ -212,6 +224,7 @@ const Generation = ({
                         personMap={personMap}
                         sonsMap={sonsMap}
                         scrollToPerson={scrollToPerson}
+                        onViewDetails={onViewDetails}
                         searchTerm={searchTerm}
                         searchInInfo={searchInInfo}
                     />
@@ -224,6 +237,7 @@ const Generation = ({
 export default function FamilyTree({ familyData, searchTerm, searchInInfo }: FamilyTreeProps) {
     const [personMap, setPersonMap] = useState<Map<string, Person>>(new Map());
     const [sonsMap, setSonsMap] = useState<Map<string, Person[]>>(new Map());
+    const [detailPerson, setDetailPerson] = useState<Person | null>(null);
     
     useEffect(() => {
         setPersonMap(createPersonMap(familyData));
@@ -241,6 +255,8 @@ export default function FamilyTree({ familyData, searchTerm, searchInInfo }: Fam
             }, 2000);
         }
     };
+    const openDetails = (p: Person) => setDetailPerson(p);
+    const closeDetails = () => setDetailPerson(null);
     
     return (
         <div className="max-w-7xl mx-auto px-4">
@@ -252,10 +268,91 @@ export default function FamilyTree({ familyData, searchTerm, searchInInfo }: Fam
                     personMap={personMap}
                     sonsMap={sonsMap}
                     scrollToPerson={scrollToPerson}
+                    onViewDetails={openDetails}
                     searchTerm={searchTerm}
                     searchInInfo={searchInInfo}
                 />
             ))}
+            {detailPerson && (
+                <div className="fixed inset-0 z-50">
+                    <div className="absolute inset-0 bg-black/40" onClick={closeDetails} />
+                    <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+                        <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6">
+                            <div className="flex items-start justify-between mb-4">
+                                <h3 className="text-2xl font-semibold text-gray-800">{detailPerson.name}</h3>
+                                <button 
+                                    onClick={closeDetails}
+                                    className="p-2 rounded-md hover:bg-gray-100"
+                                    aria-label="Close"
+                                >
+                                    <XMarkIcon className="h-5 w-5 text-gray-500" />
+                                </button>
+                            </div>
+                            <div className="flex flex-col md:flex-row gap-6">
+                                <div className="flex-shrink-0">
+                                    {detailPerson.photo ? (
+                                        <Image 
+                                            src={detailPerson.photo}
+                                            alt={detailPerson.name}
+                                            width={240}
+                                            height={240}
+                                            className="rounded-lg border border-gray-200 object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-[240px] h-[240px] flex items-center justify-center rounded-lg border border-gray-200 bg-blue-50">
+                                            <UserIcon className="h-12 w-12 text-blue-600" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex-1">
+                                    {(detailPerson.birthYear || detailPerson.deathYear) && (
+                                        <div className="flex items-center gap-2 text-gray-600 text-sm mb-3">
+                                            <CalendarIcon className="h-4 w-4" />
+                                            <span>
+                                                {detailPerson.birthYear}
+                                                {detailPerson.birthYear && detailPerson.deathYear && ' - '}
+                                                {detailPerson.deathYear && (detailPerson.birthYear ? detailPerson.deathYear : ` - ${detailPerson.deathYear}`)}
+                                            </span>
+                                        </div>
+                                    )}
+                                    <div className="text-gray-700 text-sm leading-relaxed mb-4">
+                                        {detailPerson.info}
+                                    </div>
+                                    {detailPerson.fatherId && personMap.get(detailPerson.fatherId) && (
+                                        <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
+                                            <UserGroupIcon className="h-4 w-4 text-blue-500" />
+                                            <span>父亲：</span>
+                                            <button 
+                                                onClick={() => { closeDetails(); scrollToPerson(detailPerson.fatherId!); }}
+                                                className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                                            >
+                                                {personMap.get(detailPerson.fatherId!)!.name}
+                                            </button>
+                                        </div>
+                                    )}
+                                    {(detailPerson.id && sonsMap.get(detailPerson.id)) && (sonsMap.get(detailPerson.id)!.length > 0) && (
+                                        <div className="flex flex-wrap items-center gap-2 text-gray-600 text-sm mb-2">
+                                            <UserGroupIcon className="h-4 w-4 text-green-500" />
+                                            <span>子嗣：</span>
+                                            {sonsMap.get(detailPerson.id)!.map((son, idx) => (
+                                                <span key={son.id || idx}>
+                                                    <button 
+                                                        onClick={() => { closeDetails(); if (son.id) scrollToPerson(son.id); }}
+                                                        className="text-green-600 hover:text-green-800 hover:underline font-medium"
+                                                    >
+                                                        {son.name}
+                                                    </button>
+                                                    {idx < sonsMap.get(detailPerson.id)!.length - 1 && <span className="mx-1">、</span>}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 } 
